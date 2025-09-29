@@ -1,0 +1,81 @@
+#include<iostream>
+#include<vector>
+#include<fstream>
+#include<set>
+#include<vector>
+#include<sstream>
+#include<string>
+#include<queue>
+
+#define FI "LIENTHONGBFS.INP"
+#define FO "LIENTHONGBFS.OUT"
+
+using namespace std;
+vector<bool> visited;
+queue<int> queued;
+vector<set<int>> adjList;
+int n,x;
+
+
+void bfs()
+{
+    visited[x]=true;
+    queued.push(x);
+    while(!queued.empty())
+    {
+        int u= queued.front();
+        queued.pop();
+        for(set<int>::iterator it= adjList[u].begin();it != adjList[u].end();it++)
+        {
+            int v=*it;
+            if(visited[v]==false)
+            {
+                visited[v]=true;
+                queued.push(v);
+            }
+        }
+    }
+    int count=0;
+    for(int i=1;i<=n;i++)
+    {
+        if(visited[i]==true)
+        count+=1;
+    }
+    cout<<count<<endl;
+    for(int i=1;i<=n;i++)
+    {
+        if(visited[i]==true && i!=x)
+        cout<<i<<" ";
+    }
+}
+void doc()
+{
+    char line[10000];
+    cin>>n>>x;
+    cin.ignore();
+    //cout<<n<<" "<<x;
+    int v;
+    adjList.resize(n+1);
+    for(int i=1;i<=n;i++)
+    {
+        cin.getline(line,10000);
+        stringstream stringline(line);
+        while(stringline>>v)
+        {
+            adjList[i].insert(v);
+            //cout<<v<<" ";
+        }
+        //cout<<endl;
+    }
+    visited.resize(n+1,false);
+    //open.resize(n+1);
+}
+
+
+int main()
+{
+    freopen(FI,"r",stdin);
+    doc();
+    bfs();
+    return 0;
+}
