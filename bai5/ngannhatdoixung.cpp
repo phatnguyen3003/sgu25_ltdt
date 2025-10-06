@@ -17,7 +17,9 @@ struct vertex{
     }
 };
 
-vector<int>path;
+vector<int>path_1;
+vector<int>path_2;
+vector<int>sum_path;
 vector<int>pre;
 vector<bool>label;
 vector<vector<vertex>> adjList;
@@ -35,7 +37,7 @@ void doc()
     }
 }
 
-void dijkstra(vector<int>dist,int x)
+void dijkstra(vector<int>&dist,int x)
 {
     dist.resize(dinh+1,INF);
     dist[x]=0;
@@ -75,13 +77,28 @@ void dijkstra(vector<int>dist,int x)
 
 bool find_path(vector<int>dist_1,vector<int>dist_2)
 {
-    dijkstra(dist_1,);
+    dijkstra(dist_1,dau);
+    dijkstra(dist_2,giua);
     if(dist_1[giua]==INF||dist_2[cuoi]==INF)
     {
         return false;
     }
+    for(int u=giua;u!=dau;u=pre[u])
+    {
+        path_1.push_back(u);
+    }
+    path_1.push_back(dau);
+    reverse(path_1.begin(),path_1.end());
 
-    reverse(path.begin(),path.end());
+    for(int u=cuoi;u!=giua;u=pre[u])
+    {
+        path_2.push_back(u);
+    }
+    path_2.push_back(dau);
+    reverse(path_1.begin(),path_1.end());
+
+    sum_path.insert(path_1.end(),path_2.begin(),path_2.end());
+
     return true;
 }
 
@@ -89,10 +106,14 @@ int main()
 {
     vector<int>dist_1;
     vector<int>dist_2;
-    freopen("input/dijktranopriorityqueue.inp","r",stdin);
+    freopen("input/ngannhatdoixung.inp","r",stdin);
     doc();
     if(find_path(dist_1,dist_2))
     {
-        
+        cout<<sum_path.size()<<" "<<dist_2[cuoi]<<"\n";
+        for(int i=0;i<sum_path.size();i++)
+        {
+            cout<<sum_path[i]<<" ";
+        }
     }
 }
