@@ -40,8 +40,8 @@ void doc()
         {
             dist[u][v]=w;
             path[u][v]=v;
-            dist[v][u]=w;
-            path[v][u]=u;
+            //dist[v][u]=w;
+            //path[v][u]=u;
         }
     }
 }

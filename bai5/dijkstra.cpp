@@ -79,6 +79,7 @@ bool find_path()
     dijkstra();
     if(dist[y]==INF)
     {
+        cout<<"ko";
         return false;
     }
     for(int u=y;u!=x;u=pre[u])
