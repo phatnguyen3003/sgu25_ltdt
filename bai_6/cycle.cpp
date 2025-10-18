@@ -127,14 +127,16 @@ void duyet()
             int v = adjList[u][g];
             int step = step_jump[u][v];
 
-            if(step==-1)
+            if(step==-1) // kiem tra lan 2 neu khong di duoc tu u den v ( step = -1 tuc la khong ton tai duong di den v) thi bo qua
             continue;
-            if(dist[v].first > dist[u].first + step || (dist[v].first == dist[u].first + step && dist[v].second > dist[u].second + 1))
+            if(dist[v].first > dist[u].first + step || (dist[v].first == dist[u].first + step && dist[v].second > dist[u].second + 1)) 
+            // so sanh theo 2 tieu chi: dau tien so khoang cach nhu dijkstra thuong de uu tien, neu duong di bang nhau thi so theo tieu chi cua de bai
+            // so sanh so buoc di chuyen de uu tien tuyen duong co it so buoc hon
             {
                 dist[v].first = dist[u].first+step;
                 dist[v].second = dist[u].second + 1;
-                parent[v].first = u;
-                parent[v].second = step;
+                parent[v].first = u; // cap nhat dinh truoc do cua v la u
+                parent[v].second = step;// cap nhat loai buoc di chuyen tu u den v
             }
         }
     }
@@ -146,18 +148,18 @@ void solve()
     doc();
     duyet();
     vector<int>path;
-    if(dist[cuoi].first!=INF)
+    if(dist[cuoi].first!=INF) //neu ton tai duong di den cuoi
     {
         cout<<"1\n";
-        for(int u=cuoi;u!=-1;u=parent[u].first)
+        for(int u=cuoi;u!=-1;u=parent[u].first) //bat dau truy nguoc theo parent vi trong do luu duong di ngan nhat tu dinh truoc den v
         {
             path.push_back(u);
         }
-        reverse(path.begin(),path.end());
-        cout<<dist[cuoi].first<<" "<<dist[cuoi].second+1<<"\n";
+        reverse(path.begin(),path.end()); // dao duong de co duoc duong di tu dau den cuoi
+        //cout<<dist[cuoi].first<<" "<<dist[cuoi].second+1<<"\n";
         for(int i=0;i<path.size();i++)
         {
-            cout<<path[i]<<" "<<parent[path[i]].second<<"\n";
+            cout<<path[i]<<" "<<parent[path[i]].second<<"\n"; // in ra dinh di qua va loai buoc dinh theo yeu cau
         }
     }
 }
