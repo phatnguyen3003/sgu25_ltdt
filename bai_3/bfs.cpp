@@ -16,6 +16,26 @@ queue<int> queued;
 vector<set<int>> adjList;
 int n,x;
 
+void doc()
+{
+    cin>>n>>x;
+    adjList.resize(n+1);
+    cin.ignore();
+    char line[100000];
+    int v;
+    for(int i=1;i<=n;i++)
+    {
+        cin.getline(line,1000);
+        stringstream ss(line);
+        while(ss>>v)
+        {
+            adjList[i].insert(v);
+        }
+    }
+    visited.resize(n+1);
+}
+
+
 
 void bfs()
 {
