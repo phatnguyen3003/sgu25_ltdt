@@ -4,6 +4,7 @@
 #include<vector>
 #include<stack>
 #include<set>
+#include<queue>
 
 using namespace std;
 
@@ -11,6 +12,7 @@ int sodinh,socanh;
 vector<set<int>>adjList;
 vector<bool>visited;
 vector<pair<int,int>>caykhung;
+queue<int>queued;
 //stack<int>s;
 
 
@@ -28,15 +30,31 @@ void doc()
     visited.resize(sodinh+1,false);
 }
 
+/*
+
+sodinh : so dinh cua do thi
+socanh : so canh co trong do thi de doc dau vao
+
+vector<int> hangdoi gia lap 1 hang doi ma khong dung stack, vi ket qua duoc in theo huong tang dan tu nho den lon
+visited.resize(sodinh+1,false)
+adjList.resize(Sodinh+1)
+
+
+
+*/
+
+
+
 void duyet_bfs(int x)
 {
     visited[x]=true;
     //s.push(x);
-    vector<int>hangdoi;
-    hangdoi.push_back(x);
-    for(int i=0;i<=hangdoi.size();i++)
+    
+    queued.push(x);
+    for(int i=0;i<=queued.size();i++)
     {
-        int u = hangdoi[i];
+        int u = queued.front();
+        queued.pop();
         //s.pop();
         for(auto it = adjList[u].begin();it!=adjList[u].end();it++)
         {
@@ -44,9 +62,9 @@ void duyet_bfs(int x)
             if(!visited[v])
             {
                 visited[v]=true;
-                caykhung.push_back({u,v});
+                caykhung.push_back({u,v}); // push cap dinh u va v vao caykhung chua cac canh cua cay khung dang tim
                 //s.push(v);
-                hangdoi.push_back(v);
+                queued.push(v);
             }
         }
     }
@@ -54,7 +72,7 @@ void duyet_bfs(int x)
 
 void in()
 {
-    cout<<"cay khung bfs la: \n";
+    cout<<caykhung.size()<<"\n";
     for(int i=0;i<caykhung.size();i++)
     {
         cout<<caykhung[i].first<<" "<<caykhung[i].second<<"\n";
